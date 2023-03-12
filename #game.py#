@@ -1,7 +1,7 @@
-from pyglet.window import key
+:from pyglet.window import key
 import pyglet
 import os
-#shell
+##hell
 
 
 
