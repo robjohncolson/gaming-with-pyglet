@@ -1,7 +1,7 @@
 from pyglet.window import key
 import pyglet
 import os
-#shell
+#pg. 294
 
 
 
@@ -43,7 +43,23 @@ class Ship(pyglet.sprite.Sprite):
 ship = Ship(ship_image,
             x=center_x + 300, y=center_y,
             dx=0, dy=150, rotv=-90)
+@window.event
+def on_key_press(symbol, modifiers):
+    if symbol == key.LEFT:
+        ship.rot_left = True
+    if symbol == key.RIGHT:
+        ship.rot_right = True
+    if symbol == key.UP:
+        ship.engines = True
 
+@window.event
+def on_key_release(symbol, modifiers):
+    if symbol == key.LEFT:
+        ship.rot_left = False
+    if symbol == key.RIGHT:
+        ship.rot_right = False
+    if symbol == key.UP:
+        ship.engines = False
 
 @window.event
 def on_draw():
