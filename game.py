@@ -43,6 +43,8 @@ class Ship(pyglet.sprite.Sprite):
 ship = Ship(ship_image,
             x=center_x + 300, y=center_y,
             dx=0, dy=150, rotv=-90)
+
+
 @window.event
 def on_draw():
     window.clear()
