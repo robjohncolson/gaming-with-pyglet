@@ -26,7 +26,6 @@ class Planet(pyglet.sprite.Sprite):
         self.x = x
         self.y = y
 
-
 center_x = int(window.width/2)
 center_y = int(window.height/2)
 planet = Planet(planet_image, center_x, center_y, None)
