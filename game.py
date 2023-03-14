@@ -1,6 +1,5 @@
 
 
-
 from pyglet.window import key
 from pyglet.window import Window # import Window constructor, a class from pyglet.window submodule
 from pyglet import app
@@ -29,15 +28,20 @@ def center_anchor(img):
     img.anchor_x = img.width // 2
     img.anchor_y = img.height // 2
 
+    
 box_image_on = pyglet.resource.image('box_on.png')
 center_anchor(box_image_on)
+box_image_right = pyglet.resource.image('box_right.png')
+center_anchor(box_image_right)
+box_image_left = pyglet.resource.image('box_left.png')
+center_anchor(box_image_left)
 box_image = pyglet.resource.image('box.png')
 center_anchor(box_image)
 center_x = int(win.width/2)
 center_y = int(win.height/2)
 
 
-label = Label('hey you guys',
+label = Label('hey you guys!',
               font_name='Times New Roman',
               font_size=256,
               x=center_x, y=center_y,
@@ -52,17 +56,25 @@ class Box(Sprite):
                 image, x, y, batch=batch)
             self.x = x
             self.y = y
+            self.dx = dx
             self.dy = dy
-            self.gravity = 1
+            self.right = False
             self.jump = False
+            self.left = False
 
         def update(self, dt):
             self.image = box_image
             
             if self.jump:
                 self.image = box_image_on
-                #self.dy = dt
-
+            if self.right:
+                self.image = box_image_right
+                self.x = 60 + self.x
+            if self.left:
+                self.image = box_image_left
+                self.x = self.x - 60
+            self.x += self.dx * dt
+            self.x = wrap(self.x, win.width)
             self.y += self.dy * dt
             self.y = wrap(self.y, win.height)
 
@@ -71,23 +83,31 @@ def update(dt): # ... create a scheduled function called 'update' which accepts 
     box.update(dt)
     
 # ... call the update function once per second.
-pyglet.clock.schedule_interval(update, 1/4.0)
+pyglet.clock.schedule_interval(update, 1/2.0)
 
 # ... create a 'box' instance of a Sprite object using the Box constructor
 box = Box(box_image,
             x=center_x + 640, y=center_y,
-            dx=0, dy=280)
+            dx=0, dy=140)
 
 @win.event #Event handler which sets variables when keyboard is pressed
 def on_key_press(symbol, modifiers):
     if symbol == key.UP:
         box.jump = True
-
+    if symbol == key.RIGHT:
+        box.right = True
+    if symbol == key.LEFT:
+        box.left = True
+  
 @win.event #Event handler which sets variables when keyboard is released
 def on_key_release(symbol, modifiers):
     if symbol == key.UP:
         box.jump = False
-
+    if symbol == key.RIGHT:
+        box.right = False
+    if symbol == key.LEFT:
+        box.left = False
+  
 @win.event #Event handler which clears teh window, draws ship & planet when on_draw occurs 
 def on_draw():
     # ... drawing code ....
