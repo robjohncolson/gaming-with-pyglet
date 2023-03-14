@@ -1,7 +1,6 @@
 
 
 
-
 from pyglet.window import key
 from pyglet.window import Window # import Window constructor, a class from pyglet.window submodule
 from pyglet import app
