@@ -50,6 +50,20 @@ def wrap(value, width):
     return value
 
 
+##class below has been repurposed from Listing 9.6 of pg 302 of "Hello Python!"
+class Ground(pyglet.sprite.Sprite):
+    def __init__(self, image, x=0, y=0, batch=None):
+        super(Ground, self).__init__(image, x, y, batch=batch)
+        self.x = x
+        self.y = y
+        def update (self, dt):
+            force angle = self.force_on(box)
+            force_x = force * math.cos(angle) * dt
+            force_y = force * math.sin(angle) * dt
+            ship.dx += force_x
+            ship.dy += force_y
+            
+
 class Box(Sprite):
         def __init__(self, image, x=0, y=0,
                      dx=0, dy=0, rotv=0, batch=None):
@@ -68,8 +82,8 @@ class Box(Sprite):
             
             if self.jump:
                 self.image = box_image_on
-                self.y = 40 + self.y
-                self.dy = 1 + self.dy
+                self.dy = self.dy + 10
+                self.y = self.y + self.dy * dt
             elif self.duck:
                 self.image = box_image_off
                 self.dy = self.dy - 11
@@ -93,6 +107,7 @@ class Box(Sprite):
 
 def update(dt): # ... create a scheduled function called 'update' which accepts paramter 'dt' (delta time/change in time)
     box.update(dt)
+    ground.update(dt)
 # ... call the update function twice per second.
 pyglet.clock.schedule_interval(update, 1/4.0)
 
