@@ -1,5 +1,5 @@
 from pyglet.window import key
-from pyglet.window import Window # import Window constructor, a class from pyglet.window submodule
+from pyglet.window import Window
 from pyglet import app
 from pyglet.sprite import Sprite # import Sprite constructor, a class from pyglet.sprite submodule
 from pyglet.text import Label # import Label constructor, a class from pyglet.text submodule
@@ -56,6 +56,7 @@ class Ground(pyglet.sprite.Sprite):
         self.y = y
         self.mass = 5000000
 
+        
     def dist_vec_to(self, target):
         dx = target.x - self.x
         dy = target.y - self.y
@@ -68,7 +69,7 @@ class Ground(pyglet.sprite.Sprite):
         return (distance, angle)
 
     def force_on(self, target):
-        G = 1
+        G = 2
         distance, angle = self.dist_vec_to(target)
         return ((-G * self.mass) / (distance ** 2), angle)
 
@@ -78,6 +79,23 @@ class Ground(pyglet.sprite.Sprite):
             force_y = force * math.sin(angle) * dt
             box.dx += force_x
             box.dy += force_y
+
+            print(box.dx)
+            print(force_x)
+            print(box.dy)
+            print(force_y)
+
+            
+            if abs(force_x) > 0 and abs(force_x) < 5:
+                ground.image = (box_image_off)
+            elif abs(force_x) > 6 and abs(force_x) < 10:
+                ground.image = (box_image_left)
+            elif abs(force_x) > 11 and abs(force_x) < 40:
+                ground.image = (box_image_right)
+            elif abs(force_x) > 41 and abs(force_x) < 150:
+                ground.image = (box_image_on)
+            else:
+                ground.image = (box_image)
     
 
             
@@ -100,16 +118,12 @@ class Box(Sprite):
         def update(self, dt):
             
             if self.jump:
-                self.image = box_image_on
                 self.dy += self.thrust * dt
             elif self.duck:
-                self.image = box_image_off
                 self.dy -= self.thrust * dt
             elif self.right:
-                self.image = box_image_right
                 self.x = 240 + self.x
             elif self.left:
-                self.image = box_image_left
                 self.x = self.x - 240
             else:
                 self.image = box_image
@@ -125,13 +139,11 @@ center_x = int(win.width/2)
 center_y = int(win.height/2)
 
 
-def update(dt): # ... create a scheduled function called 'update' which accepts paramter 'dt' (delta time/change in time)
+def update(dt):
     box.update(dt)
     ground.update(dt)
 
-
-# ... call the update function twice per second.
-pyglet.clock.schedule_interval(update, 1/4.0)
+pyglet.clock.schedule_interval(update, 1/8.0)
 
 
 #label = Label("hello, world.", font_name='Times New Roman',
@@ -172,11 +184,14 @@ glClearColor(.1, .045, .06, 0.0)
 
 @win.event #Event handler which clears teh window, draws ship & planet when on_draw occurs 
 def on_draw():
-    ground.draw()
     # ... drawing code ....
-    #win.clear() # ... call the clear() method of the Window constructor instance named 'win'
+    win.clear() # ... call the clear() method of the Window constructor instance named 'win'
     box.draw() # ... call the draw() method of the Ship constructor (subclass of Sprite, a submodule of sprite,) instance named 'ship'
     #label.draw() # ... call the draw() method of the label instance of the Label constructor, a class of submodule text of module pyglet.
-    
+    ground.draw()
+
+print(width)
+print(height)
+
 app.run()
 # ... call the run() method of the app constructor, a module of pyglet.
