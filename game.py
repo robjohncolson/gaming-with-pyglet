@@ -1,5 +1,3 @@
-
-
 from pyglet.window import key
 from pyglet.window import Window # import Window constructor, a class from pyglet.window submodule
 from pyglet import app
@@ -23,6 +21,7 @@ def center_anchor(img):
     img.anchor_x = img.width // 2
     img.anchor_y = img.height // 2
 
+ground_image = pyglet.resource.image('ground.png')
 box_image_on = pyglet.resource.image('box_on.png')
 center_anchor(box_image_on)
 box_image_right = pyglet.resource.image('box_right.png')
@@ -33,8 +32,6 @@ box_image = pyglet.resource.image('box.png')
 center_anchor(box_image)
 box_image_off = pyglet.resource.image('box_off.png')
 center_anchor(box_image_off)
-center_x = int(win.width/2)
-center_y = int(win.height/2)
 width = int(win.width)
 height = int(win.height)
 
@@ -56,6 +53,7 @@ class Ground(pyglet.sprite.Sprite):
         super(Ground, self).__init__(image, x, y, batch=batch)
         self.x = x
         self.y = y
+        
         def update (self, dt):
             force angle = self.force_on(box)
             force_x = force * math.cos(angle) * dt
@@ -104,6 +102,9 @@ class Box(Sprite):
             self.y = self.y + (self.dy * dt - 9.8 * dt)
             self.y = wrap(self.y, win.height)
 
+center_x = int(win.width/2)
+center_y = int(win.height/2)
+
 
 def update(dt): # ... create a scheduled function called 'update' which accepts paramter 'dt' (delta time/change in time)
     box.update(dt)
@@ -111,10 +112,16 @@ def update(dt): # ... create a scheduled function called 'update' which accepts 
 # ... call the update function twice per second.
 pyglet.clock.schedule_interval(update, 1/4.0)
 
-# ... create a 'box' instance of a Sprite object using the Box constructor
+label = Label("hello, world.", font_name='Times New Roman',
+              font_size=96,
+              x=center_x, y=center_y,
+              anchor_x='center', anchor_y='center')
+
 box = Box(box_image,
             x=center_x + 640, y=center_y,
             dx=0, dy=0)
+
+ground = Ground(ground_image, center_x, center_y, None)
 
 @win.event #Event handler which sets variables when keyboard is pressed
 def on_key_press(symbol, modifiers):
@@ -138,14 +145,12 @@ def on_key_release(symbol, modifiers):
     if symbol == key.DOWN:
         box.duck = False
         
-label = Label("hello, world.", font_name='Times New Roman',
-              font_size=96,
-              x=center_x, y=center_y,
-              anchor_x='center', anchor_y='center')
 
 glClearColor(.1, .045, .06, 0.0) 
+
 @win.event #Event handler which clears teh window, draws ship & planet when on_draw occurs 
 def on_draw():
+    ground.draw()
     # ... drawing code ....
     #win.clear() # ... call the clear() method of the Window constructor instance named 'win'
     box.draw() # ... call the draw() method of the Ship constructor (subclass of Sprite, a submodule of sprite,) instance named 'ship'
