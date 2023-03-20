@@ -209,8 +209,7 @@ pyglet.clock.schedule_interval(update, 1/4.0)
 
 
 
-
-@win.event #Event handler which sets variables when keyboard is pressed
+@win.event
 def on_key_press(symbol, modifiers):
     if symbol == key.UP:
         box.jump = True
@@ -221,7 +220,7 @@ def on_key_press(symbol, modifiers):
     if symbol == key.DOWN:
         box.duck = True
   
-@win.event #Event handler which sets variables when keyboard is released
+@win.event
 def on_key_release(symbol, modifiers):
     if symbol == key.UP:
         box.jump = False
@@ -235,9 +234,8 @@ def on_key_release(symbol, modifiers):
 
 glClearColor(.1, .045, .06, 0.0) 
 
-@win.event #Event handler which clears teh window, draws ship & planet when on_draw occurs 
+@win.event
 def on_draw():
-    # ... drawing code ....
     win.clear() # ... call the clear() method of the Window constructor instance named 'win'
     box.draw() # ... call the draw() method of the Ship constructor (subclass of Sprite, a submodule of sprite,) instance named 'ship'
     #label.draw() # ... call the draw() method of the label instance of the Label constructor, a class of submodule text of module pyglet.
@@ -248,4 +246,3 @@ print(width)
 print(height)
 
 app.run()
-# ... call the run() method of the app constructor, a module of pyglet.
