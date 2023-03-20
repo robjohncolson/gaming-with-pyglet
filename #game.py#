@@ -166,14 +166,11 @@ def update(dt):
     ground.update(dt)
     line.update(dt)
 
+    
 win = Window(width=None, height=None, caption=None, resizable=False, style=None, fullscreen=True, visible=True, vsync=True, file_drops=False, display=None, screen=None, config=None, context=None, mode=None)
 
 
 pyglet.resource.reindex()
-
-
-
-
 
             
 center_x = int(win.width/2)
@@ -195,16 +192,12 @@ center_anchor(line_image)
 
 #label = Label("hello, world.", font_name='Times New Roman',font_size=96, x=center_x, y=center_y, anchor_x='center', anchor_y='center')
 
+
 box = Box(box_image,x=center_x + 640, y=center_y, dx=0, dy=0)
 
 ground = Ground(box_image, center_x, center_y, None)
 
-line = Line(line_image, center_x, center_y+100, None)
-
-
-
-
-    
+line = Line(line_image, center_x, center_y+100, None)  
 
 
 pyglet.clock.schedule_interval(update, 1/4.0)
