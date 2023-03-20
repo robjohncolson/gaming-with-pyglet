@@ -11,6 +11,11 @@ from pyglet.gl import glClearColor
 from pyglet.graphics import draw
 
 
+############################################################################################################################################################
+#  Screen being used is 2736 x 1824
+#
+############################################################################################################################################################
+
 
 win = Window(width=None, height=None, caption=None, resizable=False, style=None, fullscreen=True, visible=True, vsync=True, file_drops=False, display=None, screen=None, config=None, context=None, mode=None)
 
@@ -36,7 +41,6 @@ def wrap(value, width):
 
 
 
-
 class Ground(pyglet.sprite.Sprite):
     def __init__(self, image, x=0, y=0, batch=None):
         super(Ground, self).__init__(image, x, y, batch=batch)
@@ -57,7 +61,7 @@ class Ground(pyglet.sprite.Sprite):
         return (distance, angle)
 
     def force_on(self, target):
-        G = 1
+        G = 3
         distance, angle = self.dist_vec_to(target)
         return ((-G * self.mass) / (distance ** 2), angle)
 
@@ -84,13 +88,14 @@ class Ground(pyglet.sprite.Sprite):
                
 
 
+
+
 class Line(pyglet.sprite.Sprite):
     def __init__(self, image, x=0, y=0, batch=None):
         super(Line, self).__init__(image, x, y, batch=batch)
         self.x = x
         self.y = y
         self.mass = 5000000
-
         
     def dist_vec_to(self, target):
         dx = target.x - self.x
@@ -116,8 +121,7 @@ class Line(pyglet.sprite.Sprite):
             box.dy += force_y
 
             print(force_x)
-        
-            
+                    
             if abs(force_x) >= 0 and abs(force_x) < 3:
                 ground.image = (box_image)
             elif abs(force_x) >= 3  and abs(force_x) < 5:
@@ -128,7 +132,10 @@ class Line(pyglet.sprite.Sprite):
                 ground.image = (box_image_right)
             elif abs(force_x) >= 30:
                 ground.image = (box_image_on)
-            
+
+
+
+                
 
 class Box(Sprite):
         def __init__(self, image, x=0, y=0,
@@ -168,7 +175,10 @@ class Box(Sprite):
             self.x = wrap(self.x, win.width)
             self.y = wrap(self.y, win.height)
 
-         
+
+
+
+            
 center_x = int(win.width/2)
 center_y = int(win.height/2)
 width = int(win.width)
@@ -185,7 +195,6 @@ box_image_off = pyglet.resource.image('box_off.png')
 center_anchor(box_image_off)
 line_image = pyglet.resource.image('line_orange.png')
 center_anchor(line_image)
-
 
 #label = Label("hello, world.", font_name='Times New Roman',font_size=96, x=center_x, y=center_y, anchor_x='center', anchor_y='center')
 
@@ -219,7 +228,9 @@ def on_key_press(symbol, modifiers):
         box.left = True
     if symbol == key.DOWN:
         box.duck = True
-  
+
+
+        
 @win.event
 def on_key_release(symbol, modifiers):
     if symbol == key.UP:
@@ -232,7 +243,10 @@ def on_key_release(symbol, modifiers):
         box.duck = False
         
 
+        
 glClearColor(.1, .045, .06, 0.0) 
+
+
 
 @win.event
 def on_draw():
@@ -242,7 +256,11 @@ def on_draw():
     ground.draw()
     line.draw()
 
+
+    
 print(width)
 print(height)
+
+
 
 app.run()
