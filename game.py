@@ -75,20 +75,21 @@ class Ground(pyglet.sprite.Sprite):
             print(force_x)
         
             
-            if abs(force_x) >= 0 and abs(force_x) < 3:
+            if abs(force_x) >= 0 and abs(force_x) < 1:
                 ground.image = (box_image)
-            elif abs(force_x) >= 3  and abs(force_x) < 5:
+            elif abs(force_x) >= 1  and abs(force_x) < 2:
                 ground.image = (box_image_off)
-            elif abs(force_x) >= 5 and abs(force_x) < 10:
+            elif abs(force_x) >= 2 and abs(force_x) < 3:
                 ground.image = (box_image_left)
-            elif abs(force_x) >= 10 and abs(force_x) < 30:
+            elif abs(force_x) >= 3 and abs(force_x) < 4:
                 ground.image = (box_image_right)
-            elif abs(force_x) >= 30:
+            elif abs(force_x) >= 4:
                 ground.image = (box_image_on)
                
 
 
 
+## proto-definition written on pg. 11-12 of yellow book.
 
 class Line(pyglet.sprite.Sprite):
     def __init__(self, image, x=0, y=0, batch=None):
@@ -114,25 +115,15 @@ class Line(pyglet.sprite.Sprite):
         return ((-G * self.mass) / (distance ** 2), angle)
 
     def update (self, dt):
-            force, angle = self.force_on(box)
-            force_x = force * math.cos(angle) * dt
-            force_y = force * math.sin(angle) * dt
-            box.dx += force_x
-            box.dy += force_y
+            #force, angle = self.force_on(box)
+            #force_x = force * math.cos(angle) * dt
+            #force_y = force * math.sin(angle) * dt
+            #box.dx += force_x
+            #box.dy += force_y
 
-            print(force_x)
+            print('force_x')
                     
-            if abs(force_x) >= 0 and abs(force_x) < 3:
-                ground.image = (box_image)
-            elif abs(force_x) >= 3  and abs(force_x) < 5:
-                ground.image = (box_image_off)
-            elif abs(force_x) >= 5 and abs(force_x) < 10:
-                ground.image = (box_image_left)
-            elif abs(force_x) >= 10 and abs(force_x) < 30:
-                ground.image = (box_image_right)
-            elif abs(force_x) >= 30:
-                ground.image = (box_image_on)
-
+            
 
 
                 
