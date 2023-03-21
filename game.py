@@ -79,28 +79,23 @@ class Line(pyglet.sprite.Sprite):
 
     def dist_vec_to(self, target):
         dx = abs(target.x - self.x)
-        dy = target.y - self.x
-        sqr_distance = dx**2 + dy**2
-        distance = math.sqrt(sqr_distance)
-
-        angle = math.acos(float(dx) / distance)
-        if dy < 0:
-            angle = 2*math.pi - angle
-        return (distance, angle)
-
+        dy = target.y - self.y
+        if dy == 2.5 and dx <= 500:
+            box.dx = 0
+            box.dy = 0
+        else:
+            box.dx = 0
+            box.dy = 0
+            print('nope')
+        
     def force_on(self, target):
-        G = 1
-        distance, angle = self.dist_vec_to(target)
-        return ((-G * self.mass) / (distance ** 2), angle)
-
+        is_ground = self.dist_vec_to(target)
+        return (is_ground)
+    
     def update (self, dt):
-            #force, angle = self.force_on(box)
-            #force_x = force * math.cos(angle) * dt
-            #force_y = force * math.sin(angle) * dt
-            #box.dx += force_x
-            #box.dy += force_y
-
-            print('force_x')
+            ground = self.force_on(box)
+                
+            
                     
             
 
@@ -166,14 +161,11 @@ def update(dt):
     ground.update(dt)
     line.update(dt)
 
+    
 win = Window(width=None, height=None, caption=None, resizable=False, style=None, fullscreen=True, visible=True, vsync=True, file_drops=False, display=None, screen=None, config=None, context=None, mode=None)
 
 
 pyglet.resource.reindex()
-
-
-
-
 
             
 center_x = int(win.width/2)
@@ -195,16 +187,12 @@ center_anchor(line_image)
 
 #label = Label("hello, world.", font_name='Times New Roman',font_size=96, x=center_x, y=center_y, anchor_x='center', anchor_y='center')
 
+
 box = Box(box_image,x=center_x + 640, y=center_y, dx=0, dy=0)
 
 ground = Ground(box_image, center_x, center_y, None)
 
-line = Line(line_image, center_x, center_y+100, None)
-
-
-
-
-    
+line = Line(line_image, center_x, center_y+100, None)  
 
 
 pyglet.clock.schedule_interval(update, 1/4.0)
