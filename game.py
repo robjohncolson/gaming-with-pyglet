@@ -79,27 +79,22 @@ class Line(pyglet.sprite.Sprite):
 
     def dist_vec_to(self, target):
         dx = abs(target.x - self.x)
-        dy = target.y - self.y
-        if dy == 2.5 and dx <= 500:
+        dy = abs(target.y - self.y)
+        if dx <= 500 and dy <= 5:
             box.dx = 0
             box.dy = 0
+            return('ground')
         else:
-            box.dx = 0
-            box.dy = 0
-            print('nope')
+            return('notground')
         
     def force_on(self, target):
-        is_ground = self.dist_vec_to(target)
-        return (is_ground)
+        status = self.dist_vec_to(target)
+        return (status)
     
     def update (self, dt):
             ground = self.force_on(box)
-                
+            print(ground)           
             
-                    
-            
-
-
                 
 
 class Box(Sprite):
@@ -115,7 +110,7 @@ class Box(Sprite):
             self.jump = False
             self.left = False
             self.duck = False
-            self.thrust = 200.0
+            self.thrust = 500.0
 
         def update(self, dt):
             
@@ -195,7 +190,7 @@ ground = Ground(box_image, center_x, center_y, None)
 line = Line(line_image, center_x, center_y+100, None)  
 
 
-pyglet.clock.schedule_interval(update, 1/4.0)
+pyglet.clock.schedule_interval(update, 1/60.0)
 
 
 
