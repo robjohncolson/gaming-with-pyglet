@@ -48,8 +48,12 @@ class Ground(pyglet.sprite.Sprite):
             force, angle = self.force_on(box)
             force_x = force * math.cos(angle) * dt
             force_y = force * math.sin(angle) * dt
+            
+            if (center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10:
+                    box.dy = 0
+            else:
+                    box.dy += force_y
             box.dx += force_x
-            box.dy += force_y
 
             print(force_x)
         
@@ -83,6 +87,7 @@ class Line(pyglet.sprite.Sprite):
         if dx <= 500 and dy <= 5:
             box.dx = 0
             box.dy = 0
+            box.y = center_y + 102.5 + (65 / 2)
             return('ground')
         else:
             return('notground')
@@ -115,10 +120,16 @@ class Box(Sprite):
         def update(self, dt):
             
             if self.jump:
-                self.dy += self.thrust * dt
+                if box.y == center_y + 102.5 + (65 / 2):
+                    self.dy = 0
+                else:
+                    self.dy += self.thrust * dt
                 self.image = box_image_off
             elif self.duck:
-                self.dy -= self.thrust * dt
+                if box.y == center_y + 102.5 + (65 / 2):
+                    self.dy = 0
+                else:
+                    self.dy -= self.thrust * dt
                 self.image = box_image_off
             elif self.right:
                 self.x += self.thrust * dt
