@@ -11,10 +11,10 @@ from pyglet.gl import glClearColor
 from pyglet.graphics import draw
 
 
-############################################################################################################################################################
+##########################################################################################################################################################
 #  Screen being used is 2736 x 1824
 #
-############################################################################################################################################################
+##########################################################################################################################################################
 
 
 
@@ -25,7 +25,7 @@ class Ground(pyglet.sprite.Sprite):
         super(Ground, self).__init__(image, x, y, batch=batch)
         self.x = x
         self.y = y
-        self.mass = 20000000
+        self.mass = 5000000
 
         
     def dist_vec_to(self, target):
@@ -41,7 +41,7 @@ class Ground(pyglet.sprite.Sprite):
 
     def force_on(self, target):
         
-        G = 5
+        G = 3
         distance, angle = self.dist_vec_to(target)
         return ((-G * self.mass) / (distance ** 2), angle)
 
@@ -52,7 +52,7 @@ class Ground(pyglet.sprite.Sprite):
             
             if ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
                     box.dy = 0
-                    box.dx = (force_x + box.dx) * 0.1
+                    box.dx = (force_x + box.dx) * 0.97
             else:
                     box.dy += force_y
                     box.dx = force_x + box.dx
@@ -135,13 +135,13 @@ class Box(Sprite):
                 self.image = box_image_off
             if self.right:
                 if ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
-                    self.dx += (self.thrust * dt * 0.3)
+                    self.dx += (self.thrust * dt * 0.97)
                 else:
                     self.dx += self.thrust * dt
                 self.image = box_image_off
             if self.left:
                 if ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
-                    self.dx -= (self.thrust * dt * 0.3)
+                    self.dx -= (self.thrust * dt * 0.97)
                 else:
                     self.dx -= self.thrust * dt
                 self.image = box_image_off
@@ -205,10 +205,9 @@ center_anchor(line_image)
 
 box = Box(box_image,x=center_x + 640, y=center_y, dx=0, dy=0)
 
-ground = Ground(box_image, center_x, center_y, None)
+ground = Ground(box_image, center_x, center_y + 45, None)
 
-line = Line(line_image, center_x, center_y+100, None)  
-
+line = Line(line_image, center_x, center_y+100, None)
 
 pyglet.clock.schedule_interval(update, 1/60.0)
 
