@@ -25,7 +25,7 @@ class Ground(pyglet.sprite.Sprite):
         super(Ground, self).__init__(image, x, y, batch=batch)
         self.x = x
         self.y = y
-        self.mass = 500000
+        self.mass = 20000000
 
         
     def dist_vec_to(self, target):
@@ -41,7 +41,7 @@ class Ground(pyglet.sprite.Sprite):
 
     def force_on(self, target):
         
-        G = 1
+        G = 5
         distance, angle = self.dist_vec_to(target)
         return ((-G * self.mass) / (distance ** 2), angle)
 
@@ -69,7 +69,6 @@ class Ground(pyglet.sprite.Sprite):
             elif abs(force_x) >= 4:
                 ground.image = (box_image_on)
                
-
 
 ## proto-definition written on pg. 11-12 of yellow book.
 
@@ -113,13 +112,16 @@ class Box(Sprite):
             
         def update(self, dt):
 
+
             if self.jump:
                 if ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
                     self.dy = 0
-                    print('faggot')
                 else:
                     self.dy += self.thrust * dt
-                self.image = box_image_off
+                    self.image = box_image_off
+            #
+             #   self.dy += self.thrust * dt
+                #self.image = box_image_off
             if self.superjump:
                 if ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
                     self.y += 300
@@ -133,21 +135,21 @@ class Box(Sprite):
                 self.image = box_image_off
             if self.right:
                 if ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
-                    self.x += (self.thrust * dt * 0.1)
+                    self.dx += (self.thrust * dt * 0.3)
                 else:
-                    self.x += self.thrust * dt
+                    self.dx += self.thrust * dt
                 self.image = box_image_off
             if self.left:
                 if ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
-                    self.x -= (self.thrust * dt * 0.1)
+                    self.dx -= (self.thrust * dt * 0.3)
                 else:
-                    self.x -= self.thrust * dt
+                    self.dx -= self.thrust * dt
                 self.image = box_image_off
             else:
                 self.image = box_image
 
-            #self.x += self.dx * dt
-            #self.y += self.dy * dt
+            self.x += self.dx * dt
+            self.y += self.dy * dt
 
             self.x = wrap(self.x, win.width)
             self.y = wrap(self.y, win.height)
