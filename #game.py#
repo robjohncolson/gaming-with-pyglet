@@ -113,12 +113,11 @@ class Box(Sprite):
             
         def update(self, dt):
 
-            if self.jump:
-                if ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
-                    self.dy = 0
-                    print('faggot')
-                else:
-                    self.dy += self.thrust * dt
+            if self.jump and ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
+                self.dy = 0
+                self.image = box_image_off
+            if self.jump and ((center_y + 102.5 + (65 / 2)) - 10 >= box.y >= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 >= box.x >= center_x + 500):
+                self.dy += self.thrust * dt
                 self.image = box_image_off
             if self.superjump:
                 if ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
