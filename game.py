@@ -107,7 +107,7 @@ class Box(Sprite):
             self.left = False
             self.duck = False
             self.superjump=False
-            self.thrust = 400.0
+            self.thrust = 430.0
 
             
         def update(self, dt):
@@ -242,7 +242,7 @@ def on_key_release(symbol, modifiers):
         box.superjump = False
         
 
-        
+#set background color        
 glClearColor(.1, .045, .06, 0.0) 
 
 
@@ -257,9 +257,5 @@ def on_draw():
 
 
     
-print(width)
-print(height)
-
-
 
 app.run()
