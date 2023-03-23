@@ -1,3 +1,5 @@
+##### modules
+
 from pyglet.window import key
 from pyglet.window import Window
 from pyglet import app
@@ -17,7 +19,7 @@ from pyglet.graphics import draw
 ##########################################################################################################################################################
 
 
-
+##### Objects (Box, Line, Source)
 
 
 class Ground(pyglet.sprite.Sprite):
@@ -154,7 +156,7 @@ class Box(Sprite):
             self.x = wrap(self.x, win.width)
             self.y = wrap(self.y, win.height)
 
-
+##### Misc. Functions
             
 def center_anchor(img):
     img.anchor_x = img.width // 2
@@ -176,6 +178,7 @@ def update(dt):
     ground.update(dt)
     line.update(dt)
 
+##### Instances
     
 win = Window(width=None, height=None, caption=None, resizable=False, style=None, fullscreen=True, visible=True, vsync=True, file_drops=False, display=None, screen=None, config=None, context=None, mode=None)
 
@@ -211,7 +214,7 @@ line = Line(line_image, center_x, center_y+100, None)
 
 pyglet.clock.schedule_interval(update, 1/60.0)
 
-
+##### Input Gathering
 
 @win.event
 def on_key_press(symbol, modifiers):
@@ -256,6 +259,6 @@ def on_draw():
     line.draw()
 
 
-    
+##### Final Command to start the program.
 
 app.run()
