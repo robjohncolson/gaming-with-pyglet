@@ -115,38 +115,69 @@ class Box(Sprite):
 
 
             if self.jump:
+                
                 if (lower_bound <= box.y <= upper_bound) and (left_bound <= box.x <= right_bound):
                     self.dy = 0
                 else:
                     self.dy += self.thrust * dt
-                    self.image = box_image_off
-            
-            if self.superjump:
+                self.image = player_image_up
+
+
+                    
+            elif self.superjump:
+                
                 if (lower_bound <= box.y <= upper_bound) and (left_bound <= box.x <= right_bound):
+                    
                     self.y += 300
                     self.dy = 0
-                    self.image = box_image_off
-            if self.duck:
+                self.image = player_image_up
+
+
+                    
+            elif self.duck:
+                
                 if (lower_bound <= box.y <= upper_bound) and (left_bound <= box.x <= right_bound):
+
                     self.dy = 0
+                    self.image = player_image_down
+
                 else:
+
                     self.dy -= self.thrust * dt
-                self.image = box_image_off
-            if self.right:
+                    self.image = player_image_down
+
+
+                
+            elif self.right:
+
                 if (lower_bound <= box.y <= upper_bound) and (left_bound <= box.x <= right_bound):
+
                     self.dx += (self.thrust * dt * 0.97)
+                    self.image = player_image_right
+
                 else:
+
                     self.dx += self.thrust * dt
-                self.image = box_image_off
-            if self.left:
+                    self.image = player_image_right
+
+
+                
+            elif self.left:
+
                 if (lower_bound <= box.y <= upper_bound) and (left_bound <= box.x <= right_bound):
                     self.dx -= (self.thrust * dt * 0.97)
                 else:
                     self.dx -= self.thrust * dt
-                self.image = box_image_off
-            else:
-                self.image = box_image
+                self.image = player_image_left
 
+
+
+            else:
+
+                self.image = player_image_on
+
+
+                
             self.x += self.dx * dt
             self.y += self.dy * dt
 
