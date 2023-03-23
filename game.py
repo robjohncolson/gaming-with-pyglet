@@ -117,9 +117,13 @@ class Box(Sprite):
             if self.jump:
                 
                 if (lower_bound <= box.y <= upper_bound) and (left_bound <= box.x <= right_bound):
+                    
                     self.dy = 0
+
                 else:
+
                     self.dy += self.thrust * dt
+
                 self.image = player_image_up
 
 
@@ -130,6 +134,7 @@ class Box(Sprite):
                     
                     self.y += 300
                     self.dy = 0
+
                 self.image = player_image_up
 
 
@@ -139,13 +144,13 @@ class Box(Sprite):
                 if (lower_bound <= box.y <= upper_bound) and (left_bound <= box.x <= right_bound):
 
                     self.dy = 0
-                    self.image = player_image_down
-
+                    
                 else:
 
                     self.dy -= self.thrust * dt
-                    self.image = player_image_down
 
+                self.image = player_image_down
+                    
 
                 
             elif self.right:
@@ -153,21 +158,25 @@ class Box(Sprite):
                 if (lower_bound <= box.y <= upper_bound) and (left_bound <= box.x <= right_bound):
 
                     self.dx += (self.thrust * dt * 0.97)
-                    self.image = player_image_right
-
+                  
                 else:
 
                     self.dx += self.thrust * dt
-                    self.image = player_image_right
+
+                self.image = player_image_right
 
 
                 
             elif self.left:
 
                 if (lower_bound <= box.y <= upper_bound) and (left_bound <= box.x <= right_bound):
+
                     self.dx -= (self.thrust * dt * 0.97)
+
                 else:
+
                     self.dx -= self.thrust * dt
+
                 self.image = player_image_left
 
 
