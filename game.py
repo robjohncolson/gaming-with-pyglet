@@ -1,16 +1,15 @@
 ##### modules
 
-from pyglet.window import key
-from pyglet.window import Window
-from pyglet import app
-from pyglet.sprite import Sprite
-from pyglet.text import Label
-import pyglet
 import os
 import math
-from random import randint
+import pyglet
+from pyglet.window import key, Window
+from pyglet.sprite import Sprite
+from pyglet.text import Label
 from pyglet.gl import glClearColor
 from pyglet.graphics import draw
+from pyglet import app
+from random import randint
 
 
 ##########################################################################################################################################################
@@ -52,7 +51,7 @@ class Ground(pyglet.sprite.Sprite):
             force_x = force * math.cos(angle) * dt
             force_y = force * math.sin(angle) * dt
             
-            if ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
+            if (lower_bound <= box.y <= upper_bound) and (left_bound <= box.x <= right_bound):
                     box.dy = 0
                     box.dx = (force_x + box.dx) * 0.97
             else:
@@ -116,33 +115,31 @@ class Box(Sprite):
 
 
             if self.jump:
-                if ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
+                if (lower_bound <= box.y <= upper_bound) and (left_bound <= box.x <= right_bound):
                     self.dy = 0
                 else:
                     self.dy += self.thrust * dt
                     self.image = box_image_off
-            #
-             #   self.dy += self.thrust * dt
-                #self.image = box_image_off
+            
             if self.superjump:
-                if ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
+                if (lower_bound <= box.y <= upper_bound) and (left_bound <= box.x <= right_bound):
                     self.y += 300
                     self.dy = 0
                     self.image = box_image_off
             if self.duck:
-                if ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
+                if (lower_bound <= box.y <= upper_bound) and (left_bound <= box.x <= right_bound):
                     self.dy = 0
                 else:
                     self.dy -= self.thrust * dt
                 self.image = box_image_off
             if self.right:
-                if ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
+                if (lower_bound <= box.y <= upper_bound) and (left_bound <= box.x <= right_bound):
                     self.dx += (self.thrust * dt * 0.97)
                 else:
                     self.dx += self.thrust * dt
                 self.image = box_image_off
             if self.left:
-                if ((center_y + 102.5 + (65 / 2)) - 10 <= box.y <= (center_y + 102.5 + (65 / 2)) + 10) and (center_x - 500 <= box.x <= center_x + 500):
+                if (lower_bound <= box.y <= upper_bound) and (left_bound <= box.x <= right_bound):
                     self.dx -= (self.thrust * dt * 0.97)
                 else:
                     self.dx -= self.thrust * dt
@@ -179,11 +176,11 @@ def update(dt):
     line.update(dt)
 
 ##### Instances
+pyglet.resource.reindex()
+glClearColor(.1, .045, .06, 0.0) 
+pyglet.clock.schedule_interval(update, 1/60.0)
     
 win = Window(width=None, height=None, caption=None, resizable=False, style=None, fullscreen=True, visible=True, vsync=True, file_drops=False, display=None, screen=None, config=None, context=None, mode=None)
-
-
-pyglet.resource.reindex()
 
             
 center_x = int(win.width/2)
@@ -200,9 +197,23 @@ box_image = pyglet.resource.image('box.png')
 center_anchor(box_image)
 box_image_off = pyglet.resource.image('box_off.png')
 center_anchor(box_image_off)
+player_image_on = pyglet.resource.image('player_on.png')
+center_anchor(player_image_on)
+player_image_right = pyglet.resource.image('player_right.png')
+center_anchor(player_image_right)
+player_image_left = pyglet.resource.image('player_left.png')
+center_anchor(player_image_left)
+player_image_up = pyglet.resource.image('player_up.png')
+center_anchor(player_image_up)
+player_image_down = pyglet.resource.image('player_down.png')
+center_anchor(player_image_down)
 line_image = pyglet.resource.image('line_orange.png')
 center_anchor(line_image)
-
+left_bound = center_x - 500
+right_bound = center_x + 500
+lower_bound = center_y + 102.5 + (65 / 2) - 10
+upper_bound = center_y + 102.5 + (65 / 2) + 10
+            
 #label = Label("hello, world.", font_name='Times New Roman',font_size=96, x=center_x, y=center_y, anchor_x='center', anchor_y='center')
 
 
@@ -212,7 +223,6 @@ ground = Ground(box_image, center_x, center_y + 45, None)
 
 line = Line(line_image, center_x, center_y+100, None)
 
-pyglet.clock.schedule_interval(update, 1/60.0)
 
 ##### Input Gathering
 
@@ -246,7 +256,6 @@ def on_key_release(symbol, modifiers):
         
 
 #set background color        
-glClearColor(.1, .045, .06, 0.0) 
 
 
 
