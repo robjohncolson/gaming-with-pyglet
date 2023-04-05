@@ -293,6 +293,7 @@ center_x = int(win.width/2)
 center_y = int(win.height/2)
 width = int(win.width)
 height = int(win.height)
+
 box_image_on = pyglet.resource.image('box_on.png')
 center_anchor(box_image_on)
 box_image_right = pyglet.resource.image('box_right.png')
@@ -313,7 +314,7 @@ player_image_up = pyglet.resource.image('player_up.png')
 center_anchor(player_image_up)
 player_image_down = pyglet.resource.image('player_down.png')
 center_anchor(player_image_down)
-line_image = pyglet.resource.image('line_orange.png')
+line_image = pyglet.resource.image('face_1.png')
 center_anchor(line_image)
 left_bound = center_x - 500
 right_bound = center_x + 500
